@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sam's Table</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <style type="text/css">
+    body {
+      width: 350px !important;
+      margin: 0px auto;
+      border: thin solid #ccc;
+    }
+
+    .list_container {
+      width: 100%;
+      overflow: hidden;
+      margin: 0 auto;
+      padding: 0px 0px 0px 15%;
+      display: block;
+      height: 100%;
+      position: relative;
+    }
+
+    section {
+      overflow: scroll;
+    }
+
+    .static {
+      position: absolute;
+      width: 350px;
+      padding-left: 40px;
+      border-top: 3px solid #ccc;
+      left: 10px;
+      color: white;
+    }
+
+    .non-committee .static {
+      /* background-color: white; */
+      border-top: 0.5px solid #eeeeee;
+      color: black;
+    }
+
+    /* table.level_2 .static {
+      left: 20px;
+    }
+
+    table.level_3 .static {
+      left: 30px;
+    }
+
+    table.level_4 .static {
+      left: 40px;
+    } */
+
+    tr {
+      height: 40px;
+    }
+
+    td {
+      padding: 5px 10px;
+    }
+
+    span {
+      display: inline-block;
+      height: 30px;
+      padding-top: 5px;
+      width: 100%;
+    }
+
+    .table_h2 {
+      font-size: .75rem;
+      margin-bottom: 0px;
+      text-align: left;
+      padding-bottom: 10px;
+      border-bottom: black 3px solid;
+    }
+
+    .table_h3 {
+      font-size: .75rem;
+      line-height: .9rem;
+      text-align: center;
+      margin-bottom: 0px;
+      min-height: 30px;
+    }
+
+    svg.fa-check-circle {
+      width: 1.5rem;
+      color: limegreen;
+      margin: 0 auto;
+      display: block
+    }
+
+    svg.fa-circle {
+      color: #ccc;
+      width: 1.5rem;
+      margin: 0 auto;
+      display: block
+    }
+
+    .icon::before {
+      content: "";
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      left: 5px;
+      top: 2px;
+    }
+
+    .kl_icon::before {
+      background: url(./kl.svg) no-repeat top left transparent;
+    }
+
+    .kl_icon {
+      background-color: #670d0d;
+      border-top: 3px solid #670d0d;
+    }
+
+    #myHeader::before {
+      border-left: 3px solid #670d0d;
+    }
+
+    .c_icon::before {
+      background: url(./c.svg) no-repeat top left transparent;
+    }
+
+    .c_icon {
+      background-color: #a94c48;
+      border-top: 3px solid #a94c48;
+    }
+
+    #myHeader2::before {
+      border-left: 3px solid #a94c48;
+    }
+
+    .ct_icon::before {
+      background: url(./ct.svg) no-repeat top left transparent;
+    }
+
+    #myHeader3::before {
+      border-left: 3px solid #ce9794;
+    }
+
+    .ct_icon {
+      background-color: #ce9794;
+      border-top: 3px solid #ce9794;
+
+    }
+
+    .Vline.level_1 {
+      border-left: 3px solid #670d0d;
+    }
+
+    .Vline.level_2 {
+      border-left: 3px solid #a94c48;
+    }
+
+    .Vline.level_3 {
+      border-left: 3px solid #ce9794;
+    }
+
+    .p_0 {
+      padding: 0px;
+    }
+
+    .Vline {
+      height: 100%;
+      position: absolute;
+      border-left: 3px solid #ccc;
+      width: 0px;
+      margin-top: -10px;
+    }
+
+
+    table.level_1 {
+      /* position: relative */
+    }
+
+    table.level_2,
+    table.level_3,
+    table.level_4 {
+      margin-left: 0px;
+      /* position: relative */
+    }
+
+    table.level_2 .Vline {
+      margin-left: -45px;
+    }
+
+    table.level_3 .Vline {
+      margin-left: -35px;
+    }
+
+    table.level_4 .Vline {
+      margin-left: -25px;
+    }
+
+    tr.tr_data {
+      height: 15px;
+    }
+
+    tr.tr_data td {
+      padding: 0px 10px;
+      font-size: 12px;
+    }
+
+    tr.tr_name:before {
+      content: "";
+      width: 3px;
+      height: 225px;
+      background-color: #ccc;
+      position: absolute;
+      margin-left: -45px;
+    }
+
+    .non-committee tr.tr_name:before {
+      background-color: white;
+    }
+
+    table.level_2 tr.tr_name:before {
+      width: 3px;
+      margin-left: -35px;
+    }
+
+    table.level_2 .static {
+      left: 20px;
+    }
+
+    table.level_3 tr.tr_name:before {
+      width: 3px;
+      margin-left: -25px;
+    }
+
+    table.level_3 .static {
+      left: 30px;
+    }
+
+    table.level_4 tr.tr_name:before {
+      width: 3px;
+      margin-left: -15px;
+    }
+
+    span.text,
+    span.time {
+      font-size: 12px;
+      display: inline-block;
+      width: 96px;
+      text-align: center;
+    }
+
+    span.time {
+      font-weight: 600;
+    }
+
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 286px;
+      z-index: 10;
+    }
+
+    #myHeader.sticky .static {
+      left: -45px;
+      width: 341px;
+    }
+
+    #myHeader2.sticky .static {
+      left: -35px;
+      width: 331px;
+    }
+
+    #myHeader3.sticky .static {
+      left: -25px;
+      width: 321px;
+    }
+
+    #myHeader2 {
+      top: 35px
+    }
+
+    #myHeader3 {
+      top: 70px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="list_container">
+    <section>
+      <table class="level_1 key_leader">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr_name" id="myHeader">
+            <td colspan="6" class="static kl_icon icon">Celia Lopez</td>
+          </tr>
+          <tr class="tr_data">
+            <td colspan="6" class=" ">Leader: Jennifer Campbell</td>
+          </tr>
+          <tr class="tr_data">
+            <td colspan="6" class=" ">Followers: 3</td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <h2 class="table_h2">September Committee Meeting</h2>
+            </td>
+            <td colspan="2">
+              <h2 class="table_h2">July Buttons</h2>
+            </td>
+            <td colspan="6">
+              <h2 class="table_h2">Another Meeting</h2>
+            </td>
+          </tr>
+          <tr class="">
+            <td>
+              <h3 class="table_h3">1st Confirm</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">2nd Confirm</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Meeting Time</h3>
+              <span class="time">
+                7:00 PM
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Off Work</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Ride Plan</h3>
+              <span class="text">
+                riding with Janet
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Attended</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">1st Confirm</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Wore</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">1st Confirm</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">2nd Confirm</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Meeting Time</h3>
+              <span class="time">
+                7:00 PM
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Off Work</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Ride Plan</h3>
+              <span class="text">
+                riding with Janet
+              </span>
+            </td>
+            <td>
+              <h3 class="table_h3">Attended</h3>
+              <span>
+                <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                  <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    class=""></path>
+                </svg>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <table class="level_2 non-committee">
+              <tr class="tr_name">
+                <td class="Vline level_1"></td>
+                <td colspan="6" class="static">Angela Castro</td>
+              </tr>
+              <tr class="tr_data">
+                <td colspan="6" class="leaders">Leader: Celia Lopez</td>
+              </tr>
+              <tr class="tr_data">
+                <td colspan="6" class="followers"></td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <h2 class="table_h2">September Committee Meeting</h2>
+                </td>
+                <td colspan="2">
+                  <h2 class="table_h2">July Buttons</h2>
+                </td>
+                <td colspan="6">
+                  <h2 class="table_h2">Another Meeting</h2>
+                </td>
+              </tr>
+              <tr class="">
+                <td>
+                  <h3 class="table_h3">1st confirm</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">2nd confirm</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Meeting Time</h3>
+                  <span class="time">
+                    7:00 PM
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Off Work</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Ride Plan</h3>
+                  <span class="text">
+                    riding with Janet
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Attended</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">1st Confirm</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Wore</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">1st Confirm</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">2nd Confirm</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Meeting Time</h3>
+                  <span class="time">
+                    7:00 PM
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Off Work</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Ride Plan</h3>
+                  <span class="text">
+                    riding with Janet
+                  </span>
+                </td>
+                <td>
+                  <h3 class="table_h3">Attended</h3>
+                  <span>
+                    <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                      <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                        class=""></path>
+                    </svg>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </tr>
+          <tr>
+            <td colspan="14" class="p_0">
+              <table class="level_2 committee">
+                <tr class="tr_name" id="myHeader2">
+                  <td class="Vline level_1"></td>
+                  <td colspan="6" class="static c_icon icon">Phillis Craig</td>
+                </tr>
+                <tr class="tr_data">
+                  <td colspan="6" class=" ">Leader: Celia Lopez</td>
+                </tr>
+                <tr class="tr_data">
+                  <td colspan="6" class=" ">Followers: 3</td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    <h2 class="table_h2">September Committee Meeting</h2>
+                  </td>
+                  <td colspan="2">
+                    <h2 class="table_h2">July Buttons</h2>
+                  </td>
+                  <td colspan="6">
+                    <h2 class="table_h2">Another Meeting</h2>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                    <h3 class="table_h3">1st confirm</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">2nd confirm</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Meeting Time</h3>
+                    <span class="time">
+                      7:00 PM
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Off Work</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Ride Plan</h3>
+                    <span class="text">
+                      riding with Janet
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Attended</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">1st Confirm</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Wore</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">1st Confirm</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">2nd Confirm</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Meeting Time</h3>
+                    <span class="time">
+                      7:00 PM
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Off Work</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Ride Plan</h3>
+                    <span class="text">
+                      riding with Janet
+                    </span>
+                  </td>
+                  <td>
+                    <h3 class="table_h3">Attended</h3>
+                    <span>
+                      <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                          class=""></path>
+                      </svg>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <table class="level_3 non-committee">
+                    <tr class="tr_name">
+                      <td class="Vline level_2"></td>
+                      <td colspan="6" class="static">Keira Jackson</td>
+                    </tr>
+                    <tr class="tr_data">
+                      <td colspan="6" class="leaders">Leader: Celia Lopez</td>
+                    </tr>
+                    <tr class="tr_data">
+                      <td colspan="6" class="followers"></td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="6">
+                        <h2 class="table_h2">September Committee Meeting</h2>
+                      </td>
+                      <td colspan="2">
+                        <h2 class="table_h2">July Buttons</h2>
+                      </td>
+                      <td colspan="6">
+                        <h2 class="table_h2">Another Meeting</h2>
+                      </td>
+                    </tr>
+                    <tr class="">
+                      <td>
+                        <h3 class="table_h3">1st confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">2nd confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Meeting Time</h3>
+                        <span class="time">
+                          7:00 PM
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Off Work</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Ride Plan</h3>
+                        <span class="text">
+                          riding with Janet
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Attended</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">1st Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Wore</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">1st Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">2nd Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Meeting Time</h3>
+                        <span class="time">
+                          7:00 PM
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Off Work</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Ride Plan</h3>
+                        <span class="text">
+                          riding with Janet
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Attended</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+                </tr>
+                <tr>
+                  <table class="level_3 non-committee">
+                    <tr class="tr_name">
+                      <td class="Vline level_2"></td>
+                      <td colspan="6" class="static">Rhea Sandoval</td>
+                    </tr>
+                    <tr class="tr_data">
+                      <td colspan="6" class="leaders">Leader: Celia Lopez</td>
+                    </tr>
+                    <tr class="tr_data">
+                      <td colspan="6" class="followers"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="6">
+                        <h2 class="table_h2">September Committee Meeting</h2>
+                      </td>
+                      <td colspan="2">
+                        <h2 class="table_h2">July Buttons</h2>
+                      </td>
+                      <td colspan="6">
+                        <h2 class="table_h2">Another Meeting</h2>
+                      </td>
+                    </tr>
+                    <tr class="">
+                      <td>
+                        <h3 class="table_h3">1st confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">2nd confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Meeting Time</h3>
+                        <span class="time">
+                          7:00 PM
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Off Work</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Ride Plan</h3>
+                        <span class="text">
+                          riding with Janet
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Attended</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">1st Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Wore</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">1st Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">2nd Confirm</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Meeting Time</h3>
+                        <span class="time">
+                          7:00 PM
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Off Work</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Ride Plan</h3>
+                        <span class="text">
+                          riding with Janet
+                        </span>
+                      </td>
+                      <td>
+                        <h3 class="table_h3">Attended</h3>
+                        <span>
+                          <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                            <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                              class=""></path>
+                          </svg>
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+                </tr>
+                <tr>
+                  <td colspan="14" class="p_0">
+                    <table class="level_3 committee">
+                      <tr class="tr_name" id="myHeader3">
+                        <td class="Vline level_2"></td>
+                        <td colspan="6" class="static ct_icon icon">Darla Cairns</td>
+                      </tr>
+                      <tr class="tr_data">
+                        <td colspan="6" class="leaders">Leader: Celia Lopez</td>
+                      </tr>
+                      <tr class="tr_data">
+                        <td colspan="6" class="followers">Followers: 2</td>
+                      </tr>
+                      <tr>
+                        <td colspan="6">
+                          <h2 class="table_h2">September Committee Meeting</h2>
+                        </td>
+                        <td colspan="2">
+                          <h2 class="table_h2">July Buttons</h2>
+                        </td>
+                        <td colspan="6">
+                          <h2 class="table_h2">Another Meeting</h2>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <td>
+                          <h3 class="table_h3">1st confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">2nd confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Meeting Time</h3>
+                          <span class="time">
+                            7:00 PM
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Off Work</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Ride Plan</h3>
+                          <span class="text">
+                            riding with Janet
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Attended</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">1st Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Wore</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">1st Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">2nd Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Meeting Time</h3>
+                          <span class="time">
+                            7:00 PM
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Off Work</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Ride Plan</h3>
+                          <span class="text">
+                            riding with Janet
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Attended</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="14" class="p_0">
+                    <table class="level_4 non-committee">
+                      <tr class="tr_name">
+                        <td class="Vline level_3"></td>
+                        <td colspan="6" class="static ">Alexis Tobolski</td>
+                      </tr>
+                      <tr class="tr_data">
+                        <td colspan="6" class="leaders">Leader: Darla Cairns</td>
+                      </tr>
+                      <tr class="tr_data">
+                        <td colspan="6" class="followers">Followers 1</td>
+                      </tr>
+                      <tr>
+                        <td colspan="6">
+                          <h2 class="table_h2">September Committee Meeting</h2>
+                        </td>
+                        <td colspan="2">
+                          <h2 class="table_h2">July Buttons</h2>
+                        </td>
+                        <td colspan="6">
+                          <h2 class="table_h2">Another Meeting</h2>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <td>
+                          <h3 class="table_h3">1st confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">2nd confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Meeting Time</h3>
+                          <span class="time">
+                            7:00 PM
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Off Work</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Ride Plan</h3>
+                          <span class="text">
+                            riding with Janet
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Attended</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">1st Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Wore</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">1st Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">2nd Confirm</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Meeting Time</h3>
+                          <span class="time">
+                            7:00 PM
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Off Work</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Ride Plan</h3>
+                          <span class="text">
+                            riding with Janet
+                          </span>
+                        </td>
+                        <td>
+                          <h3 class="table_h3">Attended</h3>
+                          <span>
+                            <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                              <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                class=""></path>
+                            </svg>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="14" class="p_0">
+                          <table class="level_4  non-committee">
+                            <tr class="tr_name">
+                              <td class="Vline level_3"></td>
+                              <td colspan="6" class="static icon">Christopher Bloskey</td>
+                            </tr>
+                            <tr class="tr_data">
+                              <td colspan="6" class="leaders">Leader: Darla Cairns</td>
+                            </tr>
+                            <tr class="tr_data">
+                              <td colspan="6" class="followers"></td>
+                            </tr>
+                            <tr>
+                              <td colspan="6">
+                                <h2 class="table_h2">September Committee Meeting</h2>
+                              </td>
+                              <td colspan="2">
+                                <h2 class="table_h2">July Buttons</h2>
+                              </td>
+                              <td colspan="6">
+                                <h2 class="table_h2">Another Meeting</h2>
+                              </td>
+                            </tr>
+                            <tr class="">
+                              <td>
+                                <h3 class="table_h3">1st confirm</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">2nd confirm</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Meeting Time</h3>
+                                <span class="time">
+                                  7:00 PM
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Off Work</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Ride Plan</h3>
+                                <span class="text">
+                                  riding with Janet
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Attended</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">1st Confirm</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Wore</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">1st Confirm</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">2nd Confirm</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Meeting Time</h3>
+                                <span class="time">
+                                  7:00 PM
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Off Work</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Ride Plan</h3>
+                                <span class="text">
+                                  riding with Janet
+                                </span>
+                              </td>
+                              <td>
+                                <h3 class="table_h3">Attended</h3>
+                                <span>
+                                  <svg aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512" class="svg-inline--fa fa-circle fa-w-16 fa-2x">
+                                    <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                                      class=""></path>
+                                  </svg>
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+<script>
+  window.onscroll = function () { myFunction() };
+
+  var header = document.getElementById("myHeader");
+  var sticky = header.offsetTop;
+  var header2 = document.getElementById("myHeader2");
+  var sticky2 = offset(header2).top - 30;
+  var header3 = document.getElementById("myHeader3");
+  var sticky3 = offset(header3).top - 60;
+  // var header4 = document.getElementById("myHeader4");
+  // var sticky4 = header4.offsetTop - (124);
+  // var header5 = document.getElementById("myHeader5");
+  // var sticky5 = header5.offsetTop - 93;
+  // var header6 = document.getElementById("myHeader6");
+  // var sticky6 = header6.offsetTop - (124);
+  // var header7 = document.getElementById("myHeader7");
+  // var sticky7 = header7.offsetTop - (155);
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      // console.log("1_____", window.pageYOffset, sticky)
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+    if (window.pageYOffset > sticky2) {
+      console.log("2_____", offset(header2).top)
+      // console.log("2_____", window.pageYOffset, sticky2)
+      header2.classList.add("sticky");
+    } else {
+      header2.classList.remove("sticky");
+    }
+    if (window.pageYOffset > sticky3) {
+      // console.log("3_____", window.pageYOffset, sticky3)
+      header3.classList.add("sticky");
+    } else {
+      // console.log(window.pageYOffset, sticky3)
+      header3.classList.remove("sticky");
+    }
+    // if (window.pageYOffset > sticky4) {
+    //   console.log("______", window.pageYOffset, sticky4)
+    //   header4.classList.add("sticky");
+    // } else {
+    //   console.log(window.pageYOffset, sticky4)
+    //   header4.classList.remove("sticky");
+    // }
+
+    // if (window.pageYOffset > sticky5) {
+    //   console.log("______", window.pageYOffset, sticky5)
+    //   header5.classList.add("sticky");
+    // } else {
+    //   console.log(window.pageYOffset, sticky5)
+    //   header5.classList.remove("sticky");
+    // }
+    // if (window.pageYOffset > sticky6) {
+    //   console.log("______", window.pageYOffset, sticky6)
+    //   header6.classList.add("sticky");
+    // } else {
+    //   console.log(window.pageYOffset, sticky6)
+    //   header6.classList.remove("sticky");
+    // }
+    // if (window.pageYOffset > sticky7) {
+    //   console.log("______", window.pageYOffset, sticky7)
+    //   header7.classList.add("sticky");
+    // } else {
+    //   console.log(window.pageYOffset, sticky7)
+    //   header7.classList.remove("sticky");
+    // }
+
+  }
+  function offset(elem) {
+    if (!elem) elem = this;
+
+    var x = elem.offsetLeft;
+    var y = elem.offsetTop;
+
+    while (elem = elem.offsetParent) {
+      x += elem.offsetLeft;
+      y += elem.offsetTop;
+    }
+
+    return { left: x, top: y };
+  }
+</script>
+
+</html>
